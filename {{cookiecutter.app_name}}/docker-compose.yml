@@ -1,0 +1,17 @@
+version: '2.3'
+services:
+  {{cookiecutter.app_name}}:
+    build:
+      context: .
+      target: build
+    volumes:
+      - ./app:/opt/app
+
+  test:
+    build:
+      context: .
+      target: validate
+    volumes:
+      - ./app:/opt/app
+      - ./tests:/opt/tests
+      - ./requirements-dev.txt:/tmp/requirements-dev.txt

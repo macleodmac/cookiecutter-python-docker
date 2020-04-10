@@ -1,8 +1,12 @@
+# Housekeeping
+
 lint:
 	black . --line-length=120
 
 clean:
 	find . -name '*.pyc' -delete
+
+# Local Development
 
 build:
 	docker-compose build {{cookiecutter.app_name}}
@@ -13,8 +17,19 @@ run:
 shell:
 	docker-compose run --service-ports {{cookiecutter.app_name}} bash
 
-build-test:
-	docker-compose build test
+# Local Validation
+
+build-validate:
+	docker-compose build validate
 
 test:
-	docker-compose run test pytest
+	docker-compose run validate pytest
+
+flake:
+	docker-compose run validate flake8
+
+type-check:
+	docker-compose run validate mypy ./app
+
+vulnerability-check:
+	docker-compose run validate safety check
